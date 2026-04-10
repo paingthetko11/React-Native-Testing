@@ -1,199 +1,218 @@
 import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const contacts = [
-  { name: 'Anne', initials: 'AN', color: '#f6c17b' },
-  { name: 'Kate', initials: 'KA', color: '#2d2f36' },
-  { name: 'Edward', initials: 'ED', color: '#f3d37a' },
-  { name: 'Philip', initials: 'PH', color: '#d5dced' },
-  { name: 'Edo', initials: 'EO', color: '#8dc4ff' },
-];
-
 const quickActions = [
-  {
-    label: 'Add money',
-    icon: 'add',
-    iconColor: '#2c7dff',
-    iconBackground: '#e6f0ff',
-  },
-  {
-    label: 'Send Money',
-    icon: 'north-east',
-    iconColor: '#f1a643',
-    iconBackground: '#fff1de',
-  },
-  {
-    label: 'More',
-    icon: 'grid-view',
-    iconColor: '#95a3ba',
-    iconBackground: '#f1f4f9',
-  },
+  { label: 'Withdraw', icon: 'arrow-up-right' },
+  { label: 'Deposit', icon: 'arrow-down-left' },
+  { label: 'Pay', icon: 'credit-card' },
+  { label: 'Scan', icon: 'qr-code' },
 ] as const;
+
+const contacts = [
+  { name: 'Noah', initials: 'NO', color: '#92613a' },
+  { name: 'Mason', initials: 'MA', color: '#58595e' },
+  { name: 'Mason', initials: 'MS', color: '#82563f' },
+  { name: 'Lucas', initials: 'LU', color: '#ab775a' },
+  { name: 'Ethan', initials: 'ET', color: '#94716c' },
+  { name: 'Oliver', initials: 'OL', color: '#79513c' },
+] as const;
+
+const filters = ['All', 'Sent', 'Request', 'Transfer', 'Remit'] as const;
 
 const transactions = [
   {
-    title: 'Food',
-    date: '14 April 2019',
-    amount: '$450',
-    icon: 'restaurant',
-    accent: '#ffb347',
+    name: 'Henry James',
+    time: '10:30 AM',
+    amount: '+$367.00',
+    status: 'Receive',
+    color: '#75523c',
   },
   {
-    title: 'Medicine',
-    date: '14 April 2019',
-    amount: '$29',
-    icon: 'medical-services',
-    accent: '#44c48d',
+    name: 'Lily Moore',
+    time: '09:12 AM',
+    amount: '-$908.00',
+    status: 'Transfer',
+    color: '#6f584a',
   },
   {
-    title: 'Shopping',
-    date: '13 April 2019',
-    amount: '$138',
-    icon: 'shopping-bag',
-    accent: '#7b92ff',
+    name: 'Sophie Hall',
+    time: 'Yesterday',
+    amount: '-$450.00',
+    status: 'Payment',
+    color: '#3f4249',
   },
-];
+] as const;
+
+function InitialAvatar({
+  label,
+  backgroundColor,
+  size = 42,
+}: {
+  label: string;
+  backgroundColor: string;
+  size?: number;
+}) {
+  return (
+    <View
+      style={[
+        styles.initialAvatar,
+        { backgroundColor, width: size, height: size, borderRadius: size / 2 },
+      ]}>
+      <Text style={[styles.initialAvatarText, size < 40 && styles.smallAvatarText]}>
+        {label}
+      </Text>
+    </View>
+  );
+}
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <StatusBar style="light" />
-      <View style={styles.screen}>
-        <View style={styles.hero}>
-          <View style={styles.heroGlowLarge} />
-          <View style={styles.heroGlowSmall} />
-
-          <View style={styles.heroHeader}>
-            <View style={styles.profileBubble}>
-              <Text style={styles.profileBubbleText}>JT</Text>
-            </View>
-
-            <View style={styles.headerActions}>
-              <View style={styles.headerIconButton}>
-                <Feather color="#f6faff" name="search" size={18} />
-              </View>
-              <View style={styles.headerIconButton}>
-                <Feather color="#f6faff" name="bell" size={18} />
-              </View>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <View style={styles.headerMain}>
+            <InitialAvatar backgroundColor="#80553b" label="SJ" size={44} />
+            <View>
+              <Text style={styles.greeting}>
+                Hello, Sajibur <Text style={styles.wave}>👋</Text>
+              </Text>
+              <Text style={styles.subGreeting}>Welcome Back</Text>
             </View>
           </View>
 
-          <View style={styles.balanceCard}>
-            <View style={styles.balanceTopRow}>
-              <Text style={styles.balanceLabel}>Available Balance</Text>
-
-              <View style={styles.currencyPill}>
-                <View style={[styles.currencyDot, styles.currencyDotBlue]} />
-                <View style={[styles.currencyDot, styles.currencyDotRed]} />
-                <Text style={styles.currencyPillText}>USD</Text>
-              </View>
-            </View>
-
-            <Text style={styles.balanceAmount}>$16,485</Text>
-
-            <View style={styles.balanceFooter}>
-              <View style={styles.inlineAction}>
-                <Text style={styles.inlineActionText}>See More</Text>
-                <Feather color="#8a97aa" name="chevron-right" size={14} />
-              </View>
-
-              <View style={styles.inlineAction}>
-                <Text style={styles.inlineActionText}>US Dollar</Text>
-                <Feather color="#8a97aa" name="chevron-down" size={14} />
-              </View>
+          <View style={styles.notificationWrap}>
+            <Feather color="#d0d0d1" name="bell" size={18} />
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>2</Text>
             </View>
           </View>
         </View>
 
-        <ScrollView
-          contentContainerStyle={styles.content}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.contactsCard}>
-            <View style={styles.contactSearchButton}>
-              <Feather color="#ffffff" name="search" size={16} />
+        <View style={styles.balanceCard}>
+          <View style={styles.balanceTopRow}>
+            <Text style={styles.balanceLabel}>My Balance</Text>
+            <View style={styles.addCardButton}>
+              <Text style={styles.addCardButtonText}>Add Card +</Text>
             </View>
-
-            <ScrollView
-              contentContainerStyle={styles.contactsRow}
-              horizontal
-              showsHorizontalScrollIndicator={false}>
-              {contacts.map((contact) => (
-                <View key={contact.name} style={styles.contactItem}>
-                  <View style={[styles.avatar, { backgroundColor: contact.color }]}>
-                    <Text
-                      style={[
-                        styles.avatarText,
-                        contact.color === '#2d2f36' && styles.avatarTextLight,
-                      ]}>
-                      {contact.initials}
-                    </Text>
-                  </View>
-                  <Text style={styles.contactName}>{contact.name}</Text>
-                </View>
-              ))}
-            </ScrollView>
           </View>
 
-          <View style={styles.quickActionsCard}>
+          <Text style={styles.balanceAmount}>$24,600.00</Text>
+          <Text style={styles.balanceGrowth}>+22.7%</Text>
+
+          <View style={styles.quickActionsRow}>
             {quickActions.map((action) => (
-              <View key={action.label} style={styles.quickActionItem}>
-                <View
-                  style={[
-                    styles.quickActionIconWrap,
-                    { backgroundColor: action.iconBackground },
-                  ]}>
-                  <MaterialIcons
-                    color={action.iconColor}
-                    name={action.icon}
-                    size={22}
-                  />
+              <View key={action.label} style={styles.actionItem}>
+                <View style={styles.actionIconWrap}>
+                  <Feather color="#d8d8d9" name={action.icon} size={16} />
                 </View>
-                <Text style={styles.quickActionLabel}>{action.label}</Text>
+                <Text style={styles.actionText}>{action.label}</Text>
               </View>
             ))}
           </View>
 
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Transactions</Text>
-            <Text style={styles.sectionLink}>See all</Text>
+          <View style={styles.budgetRow}>
+            <View>
+              <Text style={styles.budgetLabel}>Left to spend</Text>
+              <Text style={styles.budgetAmount}>$738</Text>
+            </View>
+            <View style={styles.budgetRightBlock}>
+              <Text style={[styles.budgetLabel, styles.budgetLabelRight]}>
+                Monthly budget
+              </Text>
+              <Text style={styles.budgetAmount}>$22,550.00</Text>
+            </View>
           </View>
 
-          <View style={styles.transactionsCard}>
-            {transactions.map((transaction, index) => (
-              <View
-                key={transaction.title}
-                style={[
-                  styles.transactionRow,
-                  index !== transactions.length - 1 && styles.transactionDivider,
-                ]}>
-                <View style={styles.transactionMain}>
-                  <View
-                    style={[
-                      styles.transactionIconWrap,
-                      { backgroundColor: `${transaction.accent}20` },
-                    ]}>
-                    <MaterialIcons
-                      color={transaction.accent}
-                      name={transaction.icon}
-                      size={18}
-                    />
-                  </View>
-
-                  <View style={styles.transactionCopy}>
-                    <Text style={styles.transactionTitle}>{transaction.title}</Text>
-                    <Text style={styles.transactionDate}>{transaction.date}</Text>
-                  </View>
-                </View>
-
-                <Text style={styles.transactionAmount}>{transaction.amount}</Text>
-              </View>
-            ))}
+          <View style={styles.progressTrack}>
+            <View style={styles.progressFill}>
+              <View style={styles.progressKnob} />
+            </View>
+            <View style={styles.progressDots}>
+              <View style={styles.progressDot} />
+              <View style={styles.progressDot} />
+              <View style={styles.progressDot} />
+            </View>
           </View>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Recent Transaction</Text>
+          <Text style={styles.sectionAction}>See all</Text>
+        </View>
+
+        <ScrollView
+          contentContainerStyle={styles.contactRow}
+          horizontal
+          showsHorizontalScrollIndicator={false}>
+          {contacts.map((contact) => (
+            <View key={`${contact.name}-${contact.initials}`} style={styles.contactItem}>
+              <InitialAvatar backgroundColor={contact.color} label={contact.initials} />
+              <Text style={styles.contactName}>{contact.name}</Text>
+            </View>
+          ))}
         </ScrollView>
-      </View>
+
+        <View style={[styles.sectionHeader, styles.transactionHeader]}>
+          <Text style={styles.sectionTitle}>Transactions</Text>
+          <Text style={styles.sectionAction}>See All</Text>
+        </View>
+
+        <ScrollView
+          contentContainerStyle={styles.filterRow}
+          horizontal
+          showsHorizontalScrollIndicator={false}>
+          {filters.map((filter, index) => {
+            const active = index === 0;
+            return (
+              <View
+                key={filter}
+                style={[styles.filterChip, active && styles.filterChipActive]}>
+                <Text
+                  style={[styles.filterText, active && styles.filterTextActive]}>
+                  {filter}
+                </Text>
+              </View>
+            );
+          })}
+        </ScrollView>
+
+        <View style={styles.transactionList}>
+          {transactions.map((transaction, index) => (
+            <View
+              key={transaction.name}
+              style={[
+                styles.transactionRow,
+                index !== transactions.length - 1 && styles.transactionDivider,
+              ]}>
+              <View style={styles.transactionLeft}>
+                <InitialAvatar
+                  backgroundColor={transaction.color}
+                  label={transaction.name
+                    .split(' ')
+                    .map((part) => part[0])
+                    .join('')
+                    .slice(0, 2)}
+                  size={40}
+                />
+                <View style={styles.transactionInfo}>
+                  <Text style={styles.transactionName}>{transaction.name}</Text>
+                  <Text style={styles.transactionTime}>{transaction.time}</Text>
+                </View>
+              </View>
+
+              <View style={styles.transactionAmountWrap}>
+                <Text style={styles.transactionAmount}>{transaction.amount}</Text>
+                <Text style={styles.transactionStatus}>{transaction.status}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -201,292 +220,302 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#eff4fb',
+    backgroundColor: '#171717',
   },
-  screen: {
-    flex: 1,
-    backgroundColor: '#eff4fb',
+  content: {
+    paddingHorizontal: 18,
+    paddingTop: 10,
+    paddingBottom: 120,
+    backgroundColor: '#171717',
   },
-  hero: {
-    backgroundColor: '#1f6bff',
-    borderBottomLeftRadius: 34,
-    borderBottomRightRadius: 34,
-    paddingHorizontal: 20,
-    paddingTop: 6,
-    paddingBottom: 88,
-    position: 'relative',
-  },
-  heroGlowLarge: {
-    position: 'absolute',
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    top: -100,
-    right: -32,
-  },
-  heroGlowSmall: {
-    position: 'absolute',
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    top: 40,
-    right: 54,
-  },
-  heroHeader: {
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: 18,
   },
-  profileBubble: {
+  headerMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  greeting: {
+    color: '#f5f5f5',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  wave: {
+    fontSize: 20,
+  },
+  subGreeting: {
+    color: '#8b8b8f',
+    fontSize: 14,
+    marginTop: 3,
+  },
+  notificationWrap: {
     width: 38,
     height: 38,
     borderRadius: 19,
-    backgroundColor: '#f8d8ab',
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.24)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#202020',
+    borderWidth: 1,
+    borderColor: '#2b2b2c',
+    position: 'relative',
+  },
+  badge: {
+    position: 'absolute',
+    right: -2,
+    top: -4,
+    minWidth: 18,
+    height: 18,
+    paddingHorizontal: 4,
+    borderRadius: 9,
+    backgroundColor: '#a8ff25',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  profileBubbleText: {
-    color: '#5a3c18',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  headerActions: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  headerIconButton: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255,255,255,0.08)',
+  badgeText: {
+    color: '#161616',
+    fontSize: 10,
+    fontWeight: '800',
   },
   balanceCard: {
-    position: 'absolute',
-    left: 16,
-    right: 16,
-    bottom: -58,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1d1d1e',
     borderRadius: 24,
-    paddingVertical: 18,
-    paddingHorizontal: 16,
-    shadowColor: '#1747a2',
-    shadowOffset: { width: 0, height: 14 },
-    shadowOpacity: 0.14,
-    shadowRadius: 28,
-    elevation: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#2a2a2b',
   },
   balanceTopRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 10,
   },
   balanceLabel: {
-    color: '#7e8ca1',
+    color: '#8d8d92',
+    fontSize: 13,
+  },
+  addCardButton: {
+    backgroundColor: '#282829',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 13,
+  },
+  addCardButtonText: {
+    color: '#d5d5d7',
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '600',
   },
-  currencyPill: {
+  balanceAmount: {
+    color: '#f7f7f7',
+    fontSize: 42,
+    fontWeight: '800',
+    letterSpacing: -1,
+  },
+  balanceGrowth: {
+    color: '#9eff33',
+    fontSize: 16,
+    fontWeight: '700',
+    marginTop: 4,
+  },
+  quickActionsRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f7f9fd',
-    borderRadius: 14,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    gap: 5,
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 18,
   },
-  currencyDot: {
+  actionItem: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  actionIconWrap: {
+    width: 54,
+    height: 54,
+    borderRadius: 18,
+    backgroundColor: '#272728',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionText: {
+    color: '#d3d3d5',
+    fontSize: 12,
+  },
+  budgetRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  budgetRightBlock: {
+    alignItems: 'flex-end',
+  },
+  budgetLabel: {
+    color: '#7f8085',
+    fontSize: 12,
+    marginBottom: 3,
+  },
+  budgetLabelRight: {
+    textAlign: 'right',
+  },
+  budgetAmount: {
+    color: '#f4f4f5',
+    fontSize: 25,
+    fontWeight: '700',
+  },
+  progressTrack: {
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#232324',
+    overflow: 'hidden',
+    position: 'relative',
+    justifyContent: 'center',
+  },
+  progressFill: {
+    position: 'absolute',
+    left: 4,
+    top: 4,
+    bottom: 4,
+    width: '34%',
+    borderRadius: 6,
+    backgroundColor: '#a8ff25',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 3,
+  },
+  progressKnob: {
     width: 10,
     height: 10,
     borderRadius: 5,
-  },
-  currencyDotBlue: {
-    backgroundColor: '#2c7dff',
-  },
-  currencyDotRed: {
-    backgroundColor: '#ff6f6f',
-    marginLeft: -8,
-  },
-  currencyPillText: {
-    color: '#334155',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  balanceAmount: {
-    color: '#121826',
-    fontSize: 35,
-    fontWeight: '800',
-    letterSpacing: -1,
-    marginBottom: 16,
-  },
-  balanceFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  inlineAction: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 3,
-  },
-  inlineActionText: {
-    color: '#6c7b90',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  content: {
-    paddingTop: 74,
-    paddingHorizontal: 16,
-    paddingBottom: 28,
-    gap: 18,
-  },
-  contactsCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  contactSearchButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#2c7dff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  contactsRow: {
-    paddingRight: 8,
-    gap: 16,
-  },
-  contactItem: {
-    alignItems: 'center',
-    width: 56,
-    gap: 8,
-  },
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: {
-    color: '#2e2f33',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  avatarTextLight: {
-    color: '#ffffff',
-  },
-  contactName: {
-    color: '#3f4b60',
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  quickActionsCard: {
-    flexDirection: 'row',
     backgroundColor: '#ffffff',
-    borderRadius: 24,
-    paddingHorizontal: 12,
-    paddingVertical: 18,
-    justifyContent: 'space-between',
-    shadowColor: '#123a7d',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.05,
-    shadowRadius: 18,
-    elevation: 5,
   },
-  quickActionItem: {
-    alignItems: 'center',
-    gap: 12,
-    flex: 1,
+  progressDots: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginHorizontal: 14,
   },
-  quickActionIconWrap: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  quickActionLabel: {
-    color: '#344256',
-    fontSize: 12,
-    fontWeight: '600',
+  progressDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#4b4b4d',
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 2,
+    marginTop: 18,
+    marginBottom: 12,
   },
   sectionTitle: {
-    color: '#161d2d',
-    fontSize: 19,
-    fontWeight: '800',
-  },
-  sectionLink: {
-    color: '#2d7cff',
-    fontSize: 13,
+    color: '#f2f2f2',
+    fontSize: 24,
     fontWeight: '700',
   },
-  transactionsCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 26,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    shadowColor: '#173a76',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.05,
-    shadowRadius: 18,
-    elevation: 5,
+  sectionAction: {
+    color: '#ababaf',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  contactRow: {
+    gap: 16,
+    paddingRight: 12,
+  },
+  contactItem: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  contactName: {
+    color: '#9f9fa4',
+    fontSize: 12,
+  },
+  transactionHeader: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  filterRow: {
+    gap: 10,
+    paddingBottom: 14,
+    paddingRight: 18,
+  },
+  filterChip: {
+    backgroundColor: '#252526',
+    borderRadius: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  filterChipActive: {
+    backgroundColor: '#a8ff25',
+  },
+  filterText: {
+    color: '#8f8f95',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  filterTextActive: {
+    color: '#1c1c1c',
+  },
+  transactionList: {
+    backgroundColor: '#1d1d1e',
+    borderRadius: 24,
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderColor: '#29292b',
   },
   transactionRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 16,
+    paddingVertical: 14,
   },
   transactionDivider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e7edf6',
+    borderBottomColor: '#303032',
   },
-  transactionMain: {
+  transactionLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
     marginRight: 12,
   },
-  transactionIconWrap: {
-    width: 38,
-    height: 38,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
+  transactionInfo: {
+    marginLeft: 12,
+    gap: 4,
   },
-  transactionCopy: {
-    gap: 3,
+  transactionName: {
+    color: '#f4f4f5',
+    fontSize: 16,
+    fontWeight: '600',
   },
-  transactionTitle: {
-    color: '#1e2431',
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  transactionDate: {
-    color: '#96a1b1',
+  transactionTime: {
+    color: '#76777d',
     fontSize: 12,
-    fontWeight: '500',
+  },
+  transactionAmountWrap: {
+    alignItems: 'flex-end',
+    gap: 4,
   },
   transactionAmount: {
-    color: '#202636',
-    fontSize: 15,
-    fontWeight: '800',
+    color: '#f4f4f5',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  transactionStatus: {
+    color: '#8a8b91',
+    fontSize: 12,
+  },
+  initialAvatar: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#2d2d2e',
+  },
+  initialAvatarText: {
+    color: '#f8f8f8',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  smallAvatarText: {
+    fontSize: 12,
   },
 });
