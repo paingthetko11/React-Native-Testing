@@ -1,26 +1,24 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type DashboardPlaceholderScreenProps = {
   title: string;
   description: string;
-  iconName: React.ComponentProps<typeof MaterialIcons>['name'];
-  tint: string;
+  iconName: React.ComponentProps<typeof Ionicons>["name"];
 };
 
 export function DashboardPlaceholderScreen({
   title,
   description,
   iconName,
-  tint,
 }: DashboardPlaceholderScreenProps) {
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <View style={styles.container}>
-        <View style={styles.card}>
-          <View style={[styles.iconWrap, { backgroundColor: `${tint}20` }]}>
-            <MaterialIcons color={tint} name={iconName} size={34} />
+        <View style={styles.content}>
+          <View style={styles.iconWrap}>
+            <Ionicons color="#171717" name={iconName} size={34} />
           </View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
@@ -33,45 +31,44 @@ export function DashboardPlaceholderScreen({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#eff4fb',
+    backgroundColor: "#171717",
   },
   container: {
     flex: 1,
-    backgroundColor: '#eff4fb',
-    paddingHorizontal: 20,
-    paddingVertical: 28,
-    justifyContent: 'center',
+    backgroundColor: "#171717",
+    paddingBottom: 120,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 32,
-    paddingHorizontal: 28,
+  content: {
+    width: "86%",
+    maxWidth: 420,
     paddingVertical: 36,
-    alignItems: 'center',
-    shadowColor: '#173a76',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.08,
-    shadowRadius: 22,
-    elevation: 6,
+    paddingHorizontal: 24,
+    borderRadius: 28,
+    backgroundColor: "#1f1f1f",
+    alignItems: "center",
   },
   iconWrap: {
-    width: 76,
-    height: 76,
-    borderRadius: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 82,
+    height: 82,
+    borderRadius: 28,
+    backgroundColor: "#a8ff25",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 18,
   },
   title: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: '#182131',
+    color: "#f4f4f5",
+    fontSize: 32,
+    fontWeight: "800",
     marginBottom: 10,
   },
   description: {
+    color: "#8d8d92",
     fontSize: 15,
     lineHeight: 22,
-    textAlign: 'center',
-    color: '#6c7b90',
+    textAlign: "center",
+    maxWidth: 280,
   },
 });
